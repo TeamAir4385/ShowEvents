@@ -7,35 +7,28 @@ Cloud.Events.search(
 	function (e) {
     	if (e.success) {
             var listViewItems =[];
+            
         	for (var i = 0; i < e.events.length; i++) {
         		var event = e.events[i];
-        		var eventItems = [
-	    {
-	    	name: {text: event.name}, 
-	        start_time: {text: event.start_time},
-	        details: {text: event.details}
-	        	        
-	    }
-	];
-$.eventList.sections[0].setItems(eventItems);
-
-        	                 
-
+        		listViewItems.push( 
+				    {
+				    	name: {text: e.events[i].name}, 
+				        start_time: {text: e.events[i].start_time},
+				        details: {text: e.events[i].details}
+				        	        
+				    });
 
 			//given that cloud calls are asynchronous, we need to open the window on the
 			//success of getting the cloud event.
 			
-			//listViewItems.push({properties: {title: eventItem.name, }});
-			
-			
-			//$.eventList.sections[0].setItems(listViewItems);
-
-			
-			$.index.open();        	             
-		}	
+			       	             
+			}
+		$.index.open(); 	
     	} else {
-        alert('Error:\n' +
-          ((e.error && e.message) || JSON.stringify(e)));
-    }
+        	alert('Error:\n' +
+          	((e.error && e.message) || JSON.stringify(e)));
+    	}
+    	
+    	$.eventList.sections[0].setItems(listViewItems);
 });
 
